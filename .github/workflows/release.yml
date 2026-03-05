@@ -82,12 +82,7 @@ jobs:
           CIBW_ARCHS_WINDOWS: "AMD64"
           CIBW_ENVIRONMENT: >
             SETUPTOOLS_SCM_PRETEND_VERSION=${{ steps.version.outputs.version }}
-          CIBW_TEST_COMMAND: >
-            python -c "
-            import tree_sitter_gdl;
-            lang = tree_sitter_gdl.language();
-            print(f'Language loaded: {lang}')
-            "
+          CIBW_TEST_COMMAND: "python -c \"import tree_sitter_gdl; tree_sitter_gdl.language()\""
           CIBW_TEST_REQUIRES: "tree-sitter>=0.23"
 
       - uses: actions/upload-artifact@v4
