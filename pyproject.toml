@@ -1,6 +1,6 @@
 [project]
 name = "tree-sitter-gdl"
-version = "0.1.0"
+dynamic = ["version"]
 description = "GDL/IDL grammar for tree-sitter"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -24,5 +24,9 @@ Repository = "https://github.com/iterorganization/tree-sitter-gdl"
 Issues = "https://github.com/iterorganization/tree-sitter-gdl/issues"
 
 [build-system]
-requires = ["setuptools>=75.0"]
+requires = ["setuptools>=75.0", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"

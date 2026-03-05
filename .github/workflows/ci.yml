@@ -37,11 +37,14 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -54,28 +57,8 @@ jobs:
       - name: Generate parser
         run: npx tree-sitter generate
 
-      - name: Install Python package
-        run: pip install .
-
-      - name: Install tree-sitter
-        run: pip install "tree-sitter>=0.23"
-
-      - name: Test Python bindings
+      - name: Install package and run tests
         run: |
-          python -c "
-          import tree_sitter_gdl
-          from tree_sitter import Parser
-
-          lang = tree_sitter_gdl.language()
-          parser = Parser(lang)
-
-          code = b'pro test_proc\n  x = 1\nend\n'
-          tree = parser.parse(code)
-          root = tree.root_node
-
-          assert root.type == 'source_file', f'Expected source_file, got {root.type}'
-          assert root.child_count == 1, f'Expected 1 child, got {root.child_count}'
-          assert root.children[0].type == 'procedure_definition'
-
-          print('All Python binding tests passed!')
-          "
+          uv venv --python ${{ matrix.python-version }}
+          uv pip install . "tree-sitter>=0.23" pytest
+          uv run pytest tests/ -v

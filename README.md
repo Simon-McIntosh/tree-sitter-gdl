@@ -9,6 +9,12 @@ Parses `.pro` files written in [GDL](https://gnudatalanguage.github.io/) (GNU Da
 ### Python
 
 ```bash
+uv add tree-sitter-gdl
+```
+
+Or with pip:
+
+```bash
 pip install tree-sitter-gdl
 ```
 
@@ -95,8 +101,11 @@ npx tree-sitter generate
 # Run corpus tests
 npx tree-sitter test
 
-# Build Python bindings
-pip install -e .
+# Build and install Python bindings (editable)
+uv pip install -e .
+
+# Run Python tests
+uv run pytest tests/ -v
 ```
 
 ### Testing
@@ -107,7 +116,27 @@ npx tree-sitter test
 
 # Parse a file
 npx tree-sitter parse example.pro
+
+# Run Python tests
+uv run pytest tests/ -v
 ```
+
+### Versioning
+
+Versions are derived automatically from git tags using `setuptools-scm`.
+To release a new version:
+
+```bash
+# Tag on your fork
+git tag v0.1.0
+git push origin v0.1.0
+
+# Push tag to upstream to trigger the release workflow
+git push upstream v0.1.0
+```
+
+The release workflow builds wheels via `cibuildwheel` and publishes to PyPI
+using trusted publishing (OIDC).
 
 ## License
 
