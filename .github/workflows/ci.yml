@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-grammar:
+    name: Test Grammar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install tree-sitter CLI
+        run: npm install tree-sitter-cli@0.24.7
+
+      - name: Generate parser
+        run: npx tree-sitter generate
+
+      - name: Run corpus tests
+        run: npx tree-sitter test
+
+  test-python:
+    name: Test Python bindings (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install tree-sitter CLI
+        run: npm install tree-sitter-cli@0.24.7
+
+      - name: Generate parser
+        run: npx tree-sitter generate
+
+      - name: Install Python package
+        run: pip install .
+
+      - name: Install tree-sitter
+        run: pip install "tree-sitter>=0.23"
+
+      - name: Test Python bindings
+        run: |
+          python -c "
+          import tree_sitter_gdl
+          from tree_sitter import Parser
+
+          lang = tree_sitter_gdl.language()
+          parser = Parser(lang)
+
+          code = b'pro test_proc\n  x = 1\nend\n'
+          tree = parser.parse(code)
+          root = tree.root_node
+
+          assert root.type == 'source_file', f'Expected source_file, got {root.type}'
+          assert root.child_count == 1, f'Expected 1 child, got {root.child_count}'
+          assert root.children[0].type == 'procedure_definition'
+
+          print('All Python binding tests passed!')
+          "

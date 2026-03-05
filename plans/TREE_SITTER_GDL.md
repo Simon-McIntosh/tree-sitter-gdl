@@ -309,54 +309,61 @@ This requires the grammar to distinguish: `mds$value` (single identifier) vs `re
 ### Phase 1: Repository Setup & Core Grammar
 
 **Deliverables:**
-- [ ] `tree-sitter init` scaffolding (grammar.js, package.json, bindings/)
-- [ ] Install `tree-sitter-cli` via npm
-- [ ] Basic expressions: numbers (int, long, float, double, scientific), strings, identifiers (including `$` in names)
-- [ ] Operators: arithmetic (`+`, `-`, `*`, `/`, `^`, `mod`), comparison (`eq`, `ne`, `lt`, `gt`, `le`, `ge`), logical (`and`, `or`, `xor`, `not`)
-- [ ] Comments (`;` to end of line, including `;+`/`;-` docstring blocks)
-- [ ] Line continuation (`$` at EOL)
-- [ ] Assignment (`=`)
-- [ ] First corpus tests
+- [x] `tree-sitter init` scaffolding (grammar.js, package.json, bindings/)
+- [x] Install `tree-sitter-cli` via npm
+- [x] Basic expressions: numbers (int, long, float, double, scientific), strings, identifiers (including `$` in names)
+- [x] Operators: arithmetic (`+`, `-`, `*`, `/`, `^`, `mod`, `<`, `>`), comparison (`eq`, `ne`, `lt`, `gt`, `le`, `ge`), logical (`and`, `or`, `xor`, `not`)
+- [x] Comments (`;` to end of line, including `;+`/`;-` docstring blocks)
+- [x] Line continuation (`$` at EOL)
+- [x] Assignment (`=`)
+- [x] First corpus tests
 
 ### Phase 2: Statements and Control Flow
 
 **Deliverables:**
-- [ ] Procedure definitions (`pro name, args`...`end`)
-- [ ] Function definitions (`function name, args`...`end`)
-- [ ] If/then/else — inline form (`if cond then stmt`)
-- [ ] If/then/begin — block form (`if cond then begin`...`endif`...`endelse`)
-- [ ] For loops (`for i=0, n-1 do begin`...`endfor`)
-- [ ] While loops (`while cond do begin`...`endwhile`)
-- [ ] Repeat/until (`repeat begin`...`endrep until cond`)
-- [ ] Case/switch statements (`case expr of`...`endcase`)
-- [ ] Goto (`goto, label`)
-- [ ] Return (`return, value`)
-- [ ] Common blocks (`common name, var1, var2`)
-- [ ] Batch include (`@filename`)
+- [x] Procedure definitions (`pro name, args`...`end`)
+- [x] Function definitions (`function name, args`...`end`)
+- [x] If/then/else — inline form (`if cond then stmt`)
+- [x] If/then/begin — block form (`if cond then begin`...`endif`...`endelse`)
+- [x] For loops (`for i=0, n-1 do begin`...`endfor`)
+- [x] While loops (`while cond do begin`...`endwhile`)
+- [x] Repeat/until (`repeat begin`...`endrep until cond`)
+- [x] Case/switch statements (`case expr of`...`endcase`)
+- [x] Goto (`goto, label`)
+- [x] Return (`return, value`)
+- [x] Common blocks (`common name, var1, var2`)
+- [x] Batch include (`@filename`)
 
 ### Phase 3: Expressions and Advanced Features
 
 **Deliverables:**
-- [ ] Function/procedure calls with positional and keyword arguments
-- [ ] Keyword shorthand (`/keyword`)
-- [ ] Array indexing: `arr[0]`, `arr[0:10]`, `arr[*]`, `arr[0:*:2]`
-- [ ] Parenthesized subscript: `arr(0)` (ambiguous with function call — use MATLAB approach)
-- [ ] Structure definitions: `{tag1: val1}`, `{name, tag1: val1}`
-- [ ] Structure member access: `struct.member`
-- [ ] Object method calls: `obj->method`
-- [ ] Matrix operators: `#`, `##`
-- [ ] System variable access: `!variable` (e.g., `!pi`, `!stime`)
-- [ ] Ternary: `cond ? expr1 : expr2` (IDL 8.0+)
+- [x] Function/procedure calls with positional and keyword arguments
+- [x] Keyword shorthand (`/keyword`)
+- [x] Array indexing: `arr[0]`, `arr[0:10]`, `arr[*]`, `arr[0:*:2]`
+- [x] Parenthesized subscript: `arr(0)` (ambiguous with function call — use MATLAB approach)
+- [x] Structure definitions: `{tag1: val1}`, `{name, tag1: val1}`
+- [x] Structure member access: `struct.member`
+- [x] Object method calls: `obj->method`
+- [x] Matrix operators: `#`, `##`
+- [x] System variable access: `!variable` (e.g., `!pi`, `!stime`)
+- [x] Ternary: `cond ? expr1 : expr2` (IDL 8.0+)
+- [x] Array literals: `[expr, expr, ...]`
+- [x] Min/max operators: `<`, `>`
 
 ### Phase 4: Python Bindings & Wheel Publishing
 
 **Deliverables:**
-- [ ] `pyproject.toml` with `tree-sitter` build system
-- [ ] Python bindings via `tree-sitter init --update` (generates `bindings/python/`)
-- [ ] `setup.py` for C extension compilation
-- [ ] GitHub Actions CI: test on Linux/macOS/Windows
-- [ ] GitHub Actions release: build wheels via `cibuildwheel`, publish to PyPI
-- [ ] `Cargo.toml` for Rust bindings (optional, for tree-sitter ecosystem)
+- [x] `pyproject.toml` with `tree-sitter` build system
+- [x] Python bindings via `tree-sitter init --update` (generates `bindings/python/`)
+- [x] `setup.py` for C extension compilation
+- [x] GitHub Actions CI: test on Linux/macOS/Windows
+- [x] GitHub Actions release: build wheels via `cibuildwheel`, publish to PyPI
+- [x] `Cargo.toml` for Rust bindings (optional, for tree-sitter ecosystem)
+- [x] Syntax highlighting queries (`queries/highlights.scm`)
+- [x] Scope/definition queries (`queries/locals.scm`)
+- [x] Python pytest tests (29 tests)
+- [x] Edge case and MDSplus corpus tests (118 total corpus tests)
+- [x] Real-world validation with complex synthetic code (0 parse errors)
 
 ### Phase 5: imas-codex Integration
 
