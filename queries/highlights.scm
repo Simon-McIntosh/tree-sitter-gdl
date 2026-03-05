@@ -58,7 +58,7 @@
 ["," ":" "." "->" "@"] @punctuation.delimiter
 
 ; Operators
-["+" "-" "*" "/" "^" "#" "##" "=" "?" "~" "<" ">"] @operator
+["+" "-" "*" "/" "^" "#" "##" "=" "+=" "-=" "*=" "/=" "?" "~" "<" ">"] @operator
 
 ; Identifiers (catch-all, lowest priority)
 (identifier) @variable

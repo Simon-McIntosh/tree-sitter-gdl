@@ -81,7 +81,7 @@ module.exports = grammar({
     // Assignment
     assignment: $ => prec.right(seq(
       field('left', choice($.identifier, $.subscript_expression)),
-      '=',
+      field('operator', choice('=', '+=', '-=', '*=', '/=')),
       field('right', $._expression),
     )),
 

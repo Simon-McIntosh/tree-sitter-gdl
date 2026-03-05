@@ -75,3 +75,31 @@ Batch include
 (source_file
   (batch_include
     (identifier)))
+
+================================================================================
+Compound assignment operators
+================================================================================
+
+x += 1
+y -= 2.0
+z *= n
+arr[i] /= total
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    left: (identifier)
+    right: (number_literal))
+  (assignment
+    left: (identifier)
+    right: (number_literal))
+  (assignment
+    left: (identifier)
+    right: (identifier))
+  (assignment
+    left: (subscript_expression
+      (identifier)
+      (argument_list
+        (identifier)))
+    right: (identifier)))
